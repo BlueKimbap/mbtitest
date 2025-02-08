@@ -1,0 +1,251 @@
+/* 홈 컨테이너: 전체 레이아웃 중앙 정렬 */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* 메인 콘텐츠 영역 */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px auto 0; /* 위로 50px 여백, 중앙 정렬 */
+}
+
+/* 버튼들을 감싸는 컨테이너 */
+.button-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+/* 메인 이미지: 반응형으로 조절 */
+.main-image {
+  max-width: 800px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+/* 버튼과 이미지를 감싸는 래퍼 */
+.button-wrapper {
+    position: relative;
+    padding-top: 30px;
+    transition: transform 0.3s ease;
+    cursor: default;  /* 기본 커서로 변경 */
+}
+
+/* 클릭 가능한 래퍼에만 포인터 커서 적용 */
+.button-wrapper.clickable {
+    cursor: pointer;
+}
+
+/* 래퍼 hover 시 전체 요소(이미지 + 버튼) 함께 위로 이동 */
+.button-wrapper.hover-effect:hover {
+  transform: translateY(-5px);
+}
+
+/* 버튼 내부의 이미지 영역 (기본 여백 설정) */
+.button-image {
+  margin-bottom: 20px;  /* 이미지 아래 여백 */
+}
+
+/* 버튼 이미지의 크기 및 객체 맞춤 */
+.button-image img {
+  width: 120px;  
+  height: 120px;
+  object-fit: contain;
+}
+
+/* 버튼 기본 스타일 (이제 hover 효과는 .button-wrapper에서 처리) */
+.mbti-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e4abab;
+  background: linear-gradient(45deg, #3b1f1f, #a51a16);
+  border: none;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  /* 커서 스타일은 부모 .button-wrapper가 적용하므로 생략 */
+}
+
+/* 버튼 active 상태 (누를 때 살짝 눌린 효과) */
+.mbti-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 버튼 내부의 'floating' 이미지 */
+.button-image.floating {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-60px);
+    z-index: 1;
+    transition: transform 0.3s ease;
+    pointer-events: none;  /* 이미지에 대한 마우스 이벤트 비활성화 */
+}
+
+/* disabled 버튼의 커서 스타일 */
+.mbti-button.apocalypse.disabled {
+    cursor: not-allowed;
+    position: relative;
+    pointer-events: auto;  /* 툴팁을 위해 이벤트 활성화 */
+}
+
+/* 
+  기존에 개별적으로 적용했던 이미지 hover 효과(예: translateY 추가 이동)를 제거하여,  
+  이미지와 버튼이 언제나 동일한 hover 효과(.button-wrapper.hover-effect:hover)의 영향을 받도록 함.
+*/
+
+/* 인트로 메시지 */
+.intro-message {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 1rem 0 2rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1rem;
+  }
+
+  .main-image {
+    max-width: 100%;
+  }
+
+  .button-container {
+    gap: 1rem;
+  }
+
+  .intro-message {
+    font-size: 1.2rem;
+  }
+
+  .main-content {
+    margin-left: 0; /* 모바일에서는 중앙 정렬 */
+  }
+}
+
+/* 판타지 테마 버튼 스타일 */
+.mbti-button.fantasy {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #faf5f1;
+  background: linear-gradient(45deg, #ac653c, #ff8441);
+  border: none;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 사이버펑크 테마 버튼 스타일 */
+.mbti-button.cyberpunk {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ebf5ec;
+  background: linear-gradient(45deg, #382c3a, #3578b3);
+  border: 1px solid #1e5a43;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+}
+
+/* 버튼 active 상태 수정 */
+.mbti-button.fantasy:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mbti-button.cyberpunk:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+/* 로딩 오버레이 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.loading-content {
+  text-align: center;
+  color: white !important;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite, scale 0.5s ease;
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;  /* 밝은 흰색으로 변경 */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),  /* 글로우 효과 */
+               0 0 30px rgba(255, 255, 255, 0.6),
+               0 0 50px rgba(255, 255, 255, 0.4);
+  animation: pulse 1.5s infinite;
+  letter-spacing: 1px;
+}
+
+
+/* 애니메이션 정의 */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale {
+  0% { transform: scale(0) rotate(0deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* 빨려들어가는 효과를 위한 추가 애니메이션 */
+.loading-overlay.active {
+  animation: vortex 1s ease-in forwards;
+}
+
+@keyframes vortex {
+  0% { transform: scale(1); }
+  100% { transform: scale(0); }
+}

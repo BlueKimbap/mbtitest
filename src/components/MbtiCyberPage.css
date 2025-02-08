@@ -1,0 +1,205 @@
+ /* 전반적으로 어두운 배경과 네온 컬러를 사용하여 사이버펑크 분위기를 연출 */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif; /* 사이버펑크 느낌의 폰트 (웹폰트 추가 필요) */
+    color: #fff;
+    background: #000;
+  }
+  
+  .mbti-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .main-content {
+    width: 100%;
+    max-width: 800px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    margin-top: 50px;
+  }
+  
+  .question-container {
+    text-align: center;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: #0ff; /* 네온 시안 */
+    width: 0;
+    transition: width 0.5s ease;
+  }
+  
+  .question-text {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  
+  .choice-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .choice-label {
+    font-size: 1.2rem;
+    margin: 0 15px;
+  }
+  
+  .circles-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .circle-button {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid #0ff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .circle-button:hover {
+    background-color: rgba(0, 255, 255, 0.4);
+    transform: scale(1.1);
+  }
+  
+  .circle-button.selected {
+    background-color: #0ff;
+    transform: scale(1.2);
+  }
+  
+  .next-button {
+    background-color: #0ff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    color: #000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .next-button:hover:enabled {
+    background-color: #00e6e6;
+  }
+  
+  .next-button:disabled {
+    background-color: rgba(0, 255, 255, 0.5);
+    cursor: not-allowed;
+  }
+  
+  .audio-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    font-size: 0.9rem;
+}
+  
+  .audio-toggle {
+    background-color: rgba(0, 255, 255, 0.7);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #000;
+    transition: background-color 0.3s ease;
+  }
+  
+  .audio-toggle:hover {
+    background-color: #0ff;
+  }
+  
+  .volume-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 5px;
+    background: #0ff;
+    border-radius: 5px;
+    outline: none;
+    transition: opacity 0.2s;
+  }
+  
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #000;
+    border: 2px solid #0ff;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .loading-content {
+    text-align: center;
+  }
+  
+  .loading-spinner {
+    border: 4px solid rgba(0, 255, 255, 0.2);
+    border-top: 4px solid #0ff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px auto;
+  }
+  
+  .loading-text {
+    font-size: 1.2rem;
+    color: #0ff;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  

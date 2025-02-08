@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MbtiPage.css';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import NavigationBar from './NavigationBar';
 
 const TOTAL_QUESTIONS = [
@@ -27,8 +26,6 @@ const TOTAL_QUESTIONS = [
   "당신과 파티는 마왕성 근처의 한 평화로운 마을에 도착합니다. 겉보기에는 평온한 들판과 잔잔한 강물, 조용한 주거환경이 주민들에게 안정을 주는 듯 보입니다. 그러나 이 평화는 마왕세력의 엄격한 통제 하에 유지되는, 실상은 억압받는 자유 없는 안정이었습니다. 주민들은 현재의 안락함에 익숙해진 나머지, 진정한 자율과 자유를 누릴 기회를 잃어버렸습니다. 당신은 이 마을의 주민들이 진정한 자유를 찾기 위해서는, 지금 보이는 평화를 깨뜨리고 모든 걸 뒤엎어야 한다고 생각하시나요?",
   "마왕의 옥좌 앞에 섰습니다. 그러나 마왕의 눈빛에는 전형적인 폭군의 잔혹함 대신, 오히려 냉정하고 침착한 평온이 서려 있습니다. 그는 천천히 입을 열어 말합니다. [네가 지금까지 믿어온 전설, 그 모든 공포는 단 한 가지 진실을 감추고 있네. 나는 단순한 악의 화신이 아니다. 내 존재는 수세기 전, 세계 각 왕국의 지도자들이 모여 서로의 불신과 분열을 막기 위해 합의한 의례적인 상징일 뿐이었으니까. 절대적인 악이 있어야 사람들은 서로 뭉쳐, 공통의 적을 향해 힘을 합칠 수 있었고, 그로써 일시적이나마 평화와 질서를 유지할 수 있었던 것이다. 내가 바로, 그들이 선택한 [악의 표상]이자 균형의 수단이지. 이제 남은 건 너의 선택뿐이다. 네가 마왕이 되던가, 아니면 마왕이 없는 세상에 혼돈을 초래하던가.] 그의 고백에 파티의 동료들은 충격에 빠지고, 당신의 마음속에는 혼란의 파도가 이는 것을 느낍니다. 당신은 이 인위적으로 만들어진 평화를 부정하고 질서를 깨뜨리겠습니까?",
 ];
-
-const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
 
 function MbtiPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);

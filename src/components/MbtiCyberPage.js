@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MbtiPage.css';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import NavigationBar from './NavigationBar';
 
 // 사이버펑크 테마의 질문 목록 (총 10문항)
@@ -28,8 +27,6 @@ const TOTAL_QUESTIONS = [
   "사이버펑크 세계의 마지막 경계선에 서 있습니다. 초월적 존재인 인공지능 [에테르 코어]가 당신에게 제안을 합니다. [나는 너를 이 세상에서 건져내어 불멸하게 만들어 줄 수 있다. 육체를 버리고 나와 함께 살아간다면, 그 지식과 자유는 무한할 것이다. 하지만 네가 알던 모든 인간적인 경험과 가족, 연인, 그리고 감정을 버리고 와야 한다.] 당신은 육체를 버리고 초월적인 존재가 될 수 있습니다. 초월을 포기하고 이 세상에 남으시겠습니까?"
 ];
 
-const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
-
 function MbtiCyberPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -45,10 +42,7 @@ function MbtiCyberPage() {
   };
 
   const handleNextQuestion = async () => {
-    if (selectedValue === null || selectedValue < 1 || selectedValue > 7) {
-      alert('올바른 값을 선택해주세요.');
-      return;
-    }
+    if (selectedValue === null) return;
 
     const newAnswers = [
       ...answers,

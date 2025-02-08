@@ -1,8 +1,11 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const OpenAI = require('openai');
 
-console.log('API Key exists:', !!process.env.GEMINI_API_KEY);
+console.log('API Key exists:', !!process.env.OPENAI_API_KEY);
 
 exports.handler = async function(event, context) {
+  // 타임아웃 설정
+  context.callbackWaitsForEmptyEventLoop = false;
+  
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -10,7 +13,7 @@ exports.handler = async function(event, context) {
     };
   }
 
-  if (!process.env.GEMINI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'API key not configured' })
@@ -19,8 +22,9 @@ exports.handler = async function(event, context) {
 
   try {
     const { answers, theme } = JSON.parse(event.body);
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
 
     const prompt = theme === 'cyberpunk' 
       ? `당신은 심리 분석 전문가입니다. 사용자의 응답을 바탕으로 MBTI 유형을 추정하고, 사이버펑크 세계관에 맞춰 성격을 분석해주세요.
@@ -44,9 +48,21 @@ ${answers.map(a => `질문: ${a.question}\n답변: ${a.answer}/7`).join('\n\n')}
 2. 판타지 세계관에서 이 성격의 소유자가 어떤 역할과 운명을 가질지 설명해주세요.
 3. 모험, 동료와의 관계, 전투 스타일, 마법이나 기술에 대한 태도 등을 포함하여 서술해주세요.`;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const analysis = response.text();
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: "당신은 MBTI 전문가이자 판타지/사이버펑크 세계관 전문가입니다."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 1000
+    });
 
     return {
       statusCode: 200,
@@ -56,17 +72,23 @@ ${answers.map(a => `질문: ${a.question}\n답변: ${a.answer}/7`).join('\n\n')}
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
       },
-      body: JSON.stringify({ analysis })
+      body: JSON.stringify({ 
+        analysis: completion.choices[0].message.content 
+      })
     };
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('Error details:', error);
+    
     return {
       statusCode: 500,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({ error: 'API processing failed' })
+      body: JSON.stringify({ 
+        error: 'API processing failed',
+        details: error.message 
+      })
     };
   }
 }; 

@@ -5,7 +5,9 @@
 
 [functions]
   node_bundler = "esbuild"
-  timeout = "30s"
+
+[[functions]]
+  external_node_modules = ["openai"]
 
 [[redirects]]
   from = "/*"

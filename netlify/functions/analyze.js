@@ -1,5 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
+console.log('API Key exists:', !!process.env.GEMINI_API_KEY);
+
 exports.handler = async function(event, context) {
   if (event.httpMethod !== 'POST') {
     return {
@@ -8,7 +10,7 @@ exports.handler = async function(event, context) {
     };
   }
 
-  if (!process.env.REACT_APP_GEMINI_API_KEY) {
+  if (!process.env.GEMINI_API_KEY) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'API key not configured' })
@@ -17,7 +19,7 @@ exports.handler = async function(event, context) {
 
   try {
     const { answers, theme } = JSON.parse(event.body);
-    const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     const prompt = theme === 'cyberpunk' 

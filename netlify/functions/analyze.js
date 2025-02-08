@@ -1,16 +1,22 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+exports.handler = async function(event, context) {
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: 'Method not allowed' })
+    };
   }
 
   if (!process.env.REACT_APP_GEMINI_API_KEY) {
-    return res.status(500).json({ error: 'API key not configured' });
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'API key not configured' })
+    };
   }
 
   try {
-    const { answers, theme } = req.body;
+    const { answers, theme } = JSON.parse(event.body);
     const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
@@ -40,9 +46,25 @@ ${answers.map(a => `질문: ${a.question}\n답변: ${a.answer}/7`).join('\n\n')}
     const response = await result.response;
     const analysis = response.text();
 
-    return res.status(200).json({ analysis });
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+      },
+      body: JSON.stringify({ analysis })
+    };
   } catch (error) {
     console.error('API Error:', error);
-    return res.status(500).json({ error: 'API processing failed' });
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({ error: 'API processing failed' })
+    };
   }
-} 
+}; 

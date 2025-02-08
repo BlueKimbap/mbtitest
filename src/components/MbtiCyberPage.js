@@ -62,7 +62,7 @@ function MbtiCyberPage() {
     if (currentQuestion === TOTAL_QUESTIONS.length - 1) {
       setIsLoading(true);
       try {
-        const response = await fetch('/api/analyze', {
+        const response = await fetch('/.netlify/functions/analyze', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
